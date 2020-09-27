@@ -27,11 +27,11 @@ public class SearchWords
         }
 
         Scanner keys = new Scanner(System.in);
-        System.out.println("Type 'quit' to leave.");
+        System.out.println("Type ':quit' to leave.");
         while(true){
             System.out.print("search>");
             final String line = keys.nextLine();
-            if (line.equals("quit")){
+            if (line.equals(":quit")){
                 break;
             }
             if (!line.isEmpty()){
