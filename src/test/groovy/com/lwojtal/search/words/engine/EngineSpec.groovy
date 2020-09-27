@@ -1,8 +1,9 @@
 package com.lwojtal.search.words.engine
 
-import com.lwojtal.search.words.engine.file.File
-import com.lwojtal.search.words.engine.file.InMemoryFile
-import com.lwojtal.search.words.engine.file.InMemoryFileSystem
+
+import com.lwojtal.search.words.engine.file.InMemoryTextFile
+import com.lwojtal.search.words.engine.file.InMemoryTextFilesRepository
+import com.lwojtal.search.words.engine.file.TextFile
 import com.lwojtal.search.words.engine.representation.FileRank
 import com.lwojtal.search.words.engine.representation.SearchResult
 import com.lwojtal.search.words.engine.representation.SetsBasedRepresentation
@@ -10,12 +11,12 @@ import com.lwojtal.search.words.engine.representation.TextFilesRepresentation
 import spock.lang.Specification
 
 class EngineSpec extends Specification {
-    InMemoryFileSystem inMemoryFileSystem = initFileSystem()
+    InMemoryTextFilesRepository inMemoryFileSystem = initFileSystem()
     def initFileSystem() {
-        InMemoryFileSystem inMemoryFileSystem = new InMemoryFileSystem()
-        inMemoryFileSystem.addFolder("emptyDir", new ArrayList<File>(Arrays.asList()))
-        inMemoryFileSystem.addFolder("dirWithSingleFile", new ArrayList<File>(Arrays.asList(
-                new InMemoryFile("file1", "This is simple text file.")
+        InMemoryTextFilesRepository inMemoryFileSystem = new InMemoryTextFilesRepository()
+        inMemoryFileSystem.addFolder("emptyDir", new ArrayList<TextFile>(Arrays.asList()))
+        inMemoryFileSystem.addFolder("dirWithSingleFile", new ArrayList<TextFile>(Arrays.asList(
+                new InMemoryTextFile("file1", "This is simple text file.")
         )))
         return inMemoryFileSystem
     }
@@ -74,19 +75,19 @@ class EngineSpec extends Specification {
     }
 
     def createWithSingleFile(String path, String fileName, String fileContent) {
-        InMemoryFileSystem inMemoryFileSystem = new InMemoryFileSystem()
-        inMemoryFileSystem.addFolder(path, new ArrayList<File>(Arrays.asList(
-                new InMemoryFile(fileName, fileContent)
+        InMemoryTextFilesRepository inMemoryFileSystem = new InMemoryTextFilesRepository()
+        inMemoryFileSystem.addFolder(path, new ArrayList<TextFile>(Arrays.asList(
+                new InMemoryTextFile(fileName, fileContent)
         )))
         TextFilesRepresentation representation = new SetsBasedRepresentation(inMemoryFileSystem)
         return new EngineFacade(representation)
     }
 
     def createWith2Files(String path, String file1Name, String file1Content, String file2Name, String file2Content) {
-        InMemoryFileSystem inMemoryFileSystem = new InMemoryFileSystem()
-        inMemoryFileSystem.addFolder(path, new ArrayList<File>(Arrays.asList(
-                new InMemoryFile(file1Name, file1Content),
-                new InMemoryFile(file2Name, file2Content)
+        InMemoryTextFilesRepository inMemoryFileSystem = new InMemoryTextFilesRepository()
+        inMemoryFileSystem.addFolder(path, new ArrayList<TextFile>(Arrays.asList(
+                new InMemoryTextFile(file1Name, file1Content),
+                new InMemoryTextFile(file2Name, file2Content)
         )))
         TextFilesRepresentation representation = new SetsBasedRepresentation(inMemoryFileSystem)
         return new EngineFacade(representation)

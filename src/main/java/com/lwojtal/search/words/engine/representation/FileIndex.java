@@ -1,6 +1,6 @@
 package com.lwojtal.search.words.engine.representation;
 
-import com.lwojtal.search.words.engine.file.File;
+import com.lwojtal.search.words.engine.file.TextFile;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -16,14 +16,14 @@ public class FileIndex {
     private final String name;
 
     // consider moving parsing
-    public static FileIndex parse(File file) {
+    public static FileIndex parse(TextFile textFile) {
         Set<String> occuredWords = new HashSet<>();
-        String content = file.getStringContent();
+        String content = textFile.getStringContent();
         List<String> words = Arrays.asList(content.toLowerCase().split("\\W+"));
         for(String word : words) {
             occuredWords.add(word);
         }
-        return new FileIndex(occuredWords, file.getName());
+        return new FileIndex(occuredWords, textFile.getName());
     }
 
     public boolean containsWord(String word) {

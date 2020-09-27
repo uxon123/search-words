@@ -1,10 +1,10 @@
 package com.lwojtal.search.words.engine.file;
 
-public class InMemoryFile implements File {
+public class InMemoryTextFile implements TextFile {
     private String name;
     private String content;
 
-    public InMemoryFile(String name, String content){
+    public InMemoryTextFile(String name, String content){
         this.name = name;
         this.content = content;
     }

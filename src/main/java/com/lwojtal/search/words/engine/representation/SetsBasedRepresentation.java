@@ -1,8 +1,8 @@
 package com.lwojtal.search.words.engine.representation;
 
 import com.lwojtal.search.words.engine.PathNotFoundException;
-import com.lwojtal.search.words.engine.file.File;
-import com.lwojtal.search.words.engine.file.FileSystem;
+import com.lwojtal.search.words.engine.file.TextFile;
+import com.lwojtal.search.words.engine.file.TextFilesRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -15,15 +15,15 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class SetsBasedRepresentation implements TextFilesRepresentation {
     @NonNull
-    private FileSystem fileSystem;
+    private TextFilesRepository textFilesRepository;
     private List<FileIndex> filesIndexes;
 
     @Override
     public void build(String folderPath) throws PathNotFoundException {
         List<FileIndex> newFilesIndexes = new ArrayList<>();
-        List<File> files = fileSystem.getFiles(folderPath);
-        for(File file : files) {
-            newFilesIndexes.add(FileIndex.parse(file));
+        List<TextFile> textFiles = textFilesRepository.getFiles(folderPath);
+        for(TextFile textFile : textFiles) {
+            newFilesIndexes.add(FileIndex.parse(textFile));
         }
 
         filesIndexes = newFilesIndexes;

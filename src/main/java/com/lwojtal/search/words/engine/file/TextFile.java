@@ -1,6 +1,6 @@
 package com.lwojtal.search.words.engine.file;
 
-public interface File {
+public interface TextFile {
     String getName();
     String getStringContent();
 }
