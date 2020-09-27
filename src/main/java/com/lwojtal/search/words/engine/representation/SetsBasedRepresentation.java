@@ -4,19 +4,30 @@ import com.lwojtal.search.words.engine.PathNotFoundException;
 import com.lwojtal.search.words.engine.file.TextFile;
 import com.lwojtal.search.words.engine.file.TextFilesRepository;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
 
-@RequiredArgsConstructor
 public class SetsBasedRepresentation implements TextFilesRepresentation {
+    private static int DEFAULT_RESULT_MAX_SIZE = 10;
+
     @NonNull
     private TextFilesRepository textFilesRepository;
     private List<FileIndex> filesIndexes;
+    private int resultCountLimit;
+
+    public SetsBasedRepresentation(@NonNull TextFilesRepository textFilesRepository, int resultCountLimit) {
+        this.textFilesRepository = textFilesRepository;
+        this.resultCountLimit = resultCountLimit;
+    }
+
+    public SetsBasedRepresentation(@NonNull TextFilesRepository textFilesRepository) {
+        this(textFilesRepository, DEFAULT_RESULT_MAX_SIZE);
+    }
 
     @Override
     public void build(String folderPath) throws PathNotFoundException {
@@ -36,7 +47,7 @@ public class SetsBasedRepresentation implements TextFilesRepresentation {
             fileRanks.add(getFileRank(phrase, fileIndex));
         }
         if (fileRanks.size() > 1) {
-            fileRanks = fileRanks.stream().sorted().collect(toList());
+            fileRanks = fileRanks.stream().sorted(Comparator.reverseOrder()).limit(resultCountLimit).collect(toList());
         }
         return SearchResult.create(fileRanks);
     }

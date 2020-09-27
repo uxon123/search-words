@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
-public class FileRank {
+public class FileRank implements Comparable<FileRank>{
     @Getter
     private String name;
     @Getter
@@ -12,6 +12,11 @@ public class FileRank {
 
     public static FileRank create(String name, int rankPercents){
         return new FileRank(name, rankPercents);
+    }
+
+    @Override
+    public int compareTo(FileRank rank) {
+        return (this.rankPercents - rank.rankPercents);
     }
 
 }
