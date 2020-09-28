@@ -14,10 +14,10 @@ class EngineSpec extends Specification {
     InMemoryTextFilesRepository inMemoryFileSystem = initFileSystem()
     def initFileSystem() {
         InMemoryTextFilesRepository inMemoryFileSystem = new InMemoryTextFilesRepository()
-        inMemoryFileSystem.addFolder("emptyDir", new ArrayList<TextFile>(Arrays.asList()))
-        inMemoryFileSystem.addFolder("dirWithSingleFile", new ArrayList<TextFile>(Arrays.asList(
+        inMemoryFileSystem.addFolder("emptyDir", [])
+        inMemoryFileSystem.addFolder("dirWithSingleFile", [
                 new InMemoryTextFile("file1", "This is simple text file.")
-        )))
+        ])
         return inMemoryFileSystem
     }
     EngineFacade facade = new EngineFacade(new SetsBasedRepresentation(inMemoryFileSystem))
@@ -123,19 +123,19 @@ class EngineSpec extends Specification {
 
     def createWithSingleFile(String path, String fileName, String fileContent) {
         InMemoryTextFilesRepository inMemoryFileSystem = new InMemoryTextFilesRepository()
-        inMemoryFileSystem.addFolder(path, new ArrayList<TextFile>(Arrays.asList(
+        inMemoryFileSystem.addFolder(path, [
                 new InMemoryTextFile(fileName, fileContent)
-        )))
+        ])
         TextFilesRepresentation representation = new SetsBasedRepresentation(inMemoryFileSystem)
         return new EngineFacade(representation)
     }
 
     def createWith2Files(String path, String file1Name, String file1Content, String file2Name, String file2Content) {
         InMemoryTextFilesRepository inMemoryFileSystem = new InMemoryTextFilesRepository()
-        inMemoryFileSystem.addFolder(path, new ArrayList<TextFile>(Arrays.asList(
+        inMemoryFileSystem.addFolder(path, [
                 new InMemoryTextFile(file1Name, file1Content),
                 new InMemoryTextFile(file2Name, file2Content)
-        )))
+        ])
         TextFilesRepresentation representation = new SetsBasedRepresentation(inMemoryFileSystem)
         return new EngineFacade(representation)
     }
@@ -143,11 +143,11 @@ class EngineSpec extends Specification {
     def createWith3Files(String path, String file1Name, String file1Content, String file2Name, String file2Content,
                          String file3Name, String file3Content) {
         InMemoryTextFilesRepository inMemoryFileSystem = new InMemoryTextFilesRepository()
-        inMemoryFileSystem.addFolder(path, new ArrayList<TextFile>(Arrays.asList(
+        inMemoryFileSystem.addFolder(path, [
                 new InMemoryTextFile(file1Name, file1Content),
                 new InMemoryTextFile(file2Name, file2Content),
                 new InMemoryTextFile(file3Name, file3Content)
-        )))
+        ])
         TextFilesRepresentation representation = new SetsBasedRepresentation(inMemoryFileSystem)
         return new EngineFacade(representation)
     }
@@ -155,11 +155,11 @@ class EngineSpec extends Specification {
     def createWith3FilesAndLimitOf2(String path, String file1Name, String file1Content, String file2Name, String file2Content,
                          String file3Name, String file3Content) {
         InMemoryTextFilesRepository inMemoryFileSystem = new InMemoryTextFilesRepository()
-        inMemoryFileSystem.addFolder(path, new ArrayList<TextFile>(Arrays.asList(
+        inMemoryFileSystem.addFolder(path, [
                 new InMemoryTextFile(file1Name, file1Content),
                 new InMemoryTextFile(file2Name, file2Content),
                 new InMemoryTextFile(file3Name, file3Content)
-        )))
+        ])
         TextFilesRepresentation representation = new SetsBasedRepresentation(inMemoryFileSystem, 2)
         return new EngineFacade(representation)
     }

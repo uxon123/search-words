@@ -8,7 +8,7 @@ import java.util.Set;
 public class Phrase {
     private final List<String> words;
 
-    public Phrase(List<String> words) {
+    private Phrase(List<String> words) {
         this.words = words;
     }
 
@@ -17,7 +17,7 @@ public class Phrase {
         return new Phrase(words);
     }
 
-    public Set<String> getUniqueWords(){
+    Set<String> getUniqueWords(){
         return new HashSet<>(words);
     }
 }

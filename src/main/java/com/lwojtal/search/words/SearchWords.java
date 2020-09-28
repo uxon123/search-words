@@ -35,7 +35,6 @@ public class SearchWords
                 break;
             }
             if (!line.isEmpty()){
-                System.out.println(line);
                 printResult(engineFacade.search(line));
             }
         }

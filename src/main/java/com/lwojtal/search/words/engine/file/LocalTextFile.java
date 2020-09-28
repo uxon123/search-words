@@ -12,7 +12,7 @@ public class LocalTextFile implements TextFile{
     private String name;
     private String path;
 
-    public static LocalTextFile create(String name, String path){
+    static LocalTextFile create(String name, String path){
         return new LocalTextFile(name, path);
     }
 

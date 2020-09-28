@@ -10,7 +10,7 @@ public class FileRank implements Comparable<FileRank>{
     @Getter
     private int rankPercents;
 
-    public static FileRank create(String name, int rankPercents){
+    static FileRank create(String name, int rankPercents){
         return new FileRank(name, rankPercents);
     }
 

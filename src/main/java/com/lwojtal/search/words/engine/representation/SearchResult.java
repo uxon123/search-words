@@ -8,11 +8,11 @@ public class SearchResult {
     @Getter
     private final List<FileRank> fileRanks;
 
-    public SearchResult(List<FileRank> fileRanks) {
+    private SearchResult(List<FileRank> fileRanks) {
         this.fileRanks = fileRanks;
     }
 
-    public static SearchResult create(List<FileRank> fileRanks) {
+    static SearchResult create(List<FileRank> fileRanks) {
         return new SearchResult(fileRanks);
     }
 

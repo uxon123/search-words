@@ -29,29 +29,51 @@ TextFile and TextFileRepository abstractions.
 
 - TextFile models read whole file into String - that was easier to implement, but should be improved so large files 
 (let's say hundreds of MBs) are processed correctly. Some kind of buffered reading or reading by lines should be implemented.
-- Input validation should be improved, i.e. inspect if file is a text file (not folder or binary)
+- Input validation should be improved, i.e. inspect if file is a text file (not binary)
 - Current search implementation is based on building indexes in form of Sets of words per each file.
 This is relatively fast (const time per file), but could be further improved with reversed indexes which points to given files.
 This implementation should have good effects if number of file is large.
-- Not all required cases are tested, test coverage should be increased, 
-some parts of code could be tested more thoroughly (lack of time);
+- Not all required cases are tested, test coverage should be increased, some parts of code could be tested 
+more thoroughly (lack of time); (including test cases for handling punctuation marks, integration tests for large files)
 - The engine api should be improved by providing dtos for all requests and responses 
 (now internal objects are returned); then some of the response formatting logic could be moved there (to dto creation).
 - The input normalization could be improved. For example now things like different forms (plural, 's) 
-are handled as separate words. We could use some external 
+are handled as separate words. We could use some external dictionary for that.
 - There are some inconsistencies with using constructors vs factory method;
 
-## How to run
+## Development
+
+### Prerequisites
+
+JDK 1.8, Maven 3
+
+### How to run
 
 First, the code must be build:
     
     mvn clean package
     
-After that, go to ./target directory and run the jar (don't forget to pass path to directory contianing text files).
+After that, just run the jar (don't forget to pass path to directory containing text files).
 For example:
 
-    java -jar search-words-1.0-SNAPSHOT.jar "../src/test/resources/testFiles/elevenFiles"
+    java -jar target/search-words-1.0-SNAPSHOT.jar "./src/test/resources/testFiles/elevenFiles"
     
+Exemplary input: 
+
+    search>worda wordb wordc wordd worde wordf wordg wordh
+    
+And output:
+
+    1.txt: 100%
+    11.txt: 100%
+    2.txt: 100%
+    3.txt: 87%
+    4.txt: 75%
+    5.txt: 62%
+    6.txt: 50%
+    7.txt: 37%
+    8.txt: 25%
+    10.txt: 12%
 
 
     

@@ -13,7 +13,7 @@ class SearchWordsSpec extends Specification {
     String smallSingleFileName = "sample.txt"
     String largeSingleFileDir = "src/test/resources/testFiles/largeSingleFile"
     String largeSingleFileName = "sample.txt"
-    String emptyDir = "src/test/resources/testFiles/empty"
+    String rootDir = "src/test/resources/testFiles"
 
     EngineFacade facade = new EngineFacade(new SetsBasedRepresentation(new LocalTextFilesRepository()))
 
@@ -25,9 +25,9 @@ class SearchWordsSpec extends Specification {
         thrown(PathNotFoundException)
     }
 
-    def "should respond with empty result if given directory is empty"() {
-        given: "the directory is empty"
-        facade.loadSourceFiles(emptyDir)
+    def "should respond with empty result if given directory doesn't have any files"() {
+        given: "the directory has only directories"
+        facade.loadSourceFiles(rootDir)
 
         when: "searching for sample phrase"
         SearchResult response = facade.search('phrase')
