@@ -44,7 +44,7 @@ public class SearchWords
 
     private static void printResult(SearchResult result){
         if (result.getFileRanks().isEmpty()){
-            System.out.println("No results found");
+            System.out.println("No matches found");
             return;
         }
         for (FileRank rank : result.getFileRanks()){

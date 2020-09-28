@@ -47,7 +47,11 @@ public class SetsBasedRepresentation implements TextFilesRepresentation {
             fileRanks.add(getFileRank(phrase, fileIndex));
         }
         if (fileRanks.size() > 1) {
-            fileRanks = fileRanks.stream().sorted(Comparator.reverseOrder()).limit(resultCountLimit).collect(toList());
+            fileRanks = fileRanks.stream()
+                    .sorted(Comparator.reverseOrder())
+                    .limit(resultCountLimit)
+                    .filter(rank -> rank.getRankPercents() > 0)
+                    .collect(toList());
         }
         return SearchResult.create(fileRanks);
     }

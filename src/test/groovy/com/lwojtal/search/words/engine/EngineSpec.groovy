@@ -1,9 +1,7 @@
 package com.lwojtal.search.words.engine
 
-
 import com.lwojtal.search.words.engine.file.InMemoryTextFile
 import com.lwojtal.search.words.engine.file.InMemoryTextFilesRepository
-import com.lwojtal.search.words.engine.file.TextFile
 import com.lwojtal.search.words.engine.representation.FileRank
 import com.lwojtal.search.words.engine.representation.SearchResult
 import com.lwojtal.search.words.engine.representation.SetsBasedRepresentation
@@ -119,6 +117,42 @@ class EngineSpec extends Specification {
 
         then: "The number of returned fileRanks is 2"
         response.getFileRanks().size() == 2
+    }
+
+    def "should return no fileRanks if there were no matches"() {
+        given: "directory contains many files"
+        EngineFacade facade = createWith3FilesAndLimitOf2("path",
+                "file1", "",
+                "file2", "zxc",
+                "file3", "cxz")
+        facade.loadSourceFiles("path")
+
+        when: "searching for a phrase containing words which cannot be found in any of files"
+        SearchResult response = facade.search("aaa bbb ccc")
+
+        then: "No file ranks are returned"
+        response.getFileRanks().isEmpty()
+    }
+
+    def "should return only fileRanks which have any matches"() {
+        given: "directory contains many files"
+        EngineFacade facade = createWith3FilesAndLimitOf2("path",
+                "file1", "",
+                "file2", "aaa",
+                "file3", "bbb")
+        facade.loadSourceFiles("path")
+
+        when: "searching for a phrase containing words which can be found in 2 of the files"
+        SearchResult response = facade.search("aaa bbb ccc")
+
+        then: "Only files with rank higher than 0 show up in result"
+        response.getFileRanks().size() == 2
+
+        response.getFileRanks().get(0).rankPercents > 0
+        response.getFileRanks().get(0).name != "file1"
+
+        response.getFileRanks().get(1).rankPercents > 0
+        response.getFileRanks().get(1).name != "file1"
     }
 
     def createWithSingleFile(String path, String fileName, String fileContent) {
